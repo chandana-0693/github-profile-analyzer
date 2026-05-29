@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>GitHub Profile Analyzer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <button class="theme-btn" onclick="toggleTheme()">
+    🌙 Toggle Mode
+  </button>
+
+  <div class="container">
+
+    <h1 class="title">GitHub Profile Analyzer</h1>
+
+    <div class="search-box">
+
+      <input type="text" id="username" placeholder="Enter GitHub Username">
+
+      <button onclick="analyzeProfile()">
+        Analyze
+      </button>
+
+    </div>
+
+    <div id="loading" class="loading">
+      Loading...
+    </div>
+
+    <div id="profileCard"></div>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
