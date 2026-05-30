@@ -1,15 +1,18 @@
 const express = require("express");
+const cors = require("cors");
 const path = require("path");
-
-const app = express();
-
-app.use(express.json());
 
 const profileRoutes = require("./routes/profileRoutes");
 
-app.use("/api/profiles", profileRoutes);
+const app = express();
 
-// Serve frontend
+app.use(cors());
+app.use(express.json());
+
+// Frontend
 app.use(express.static(path.join(__dirname, "public")));
+
+// API
+app.use("/api/profiles", profileRoutes);
 
 module.exports = app;

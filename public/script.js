@@ -15,7 +15,7 @@ async function analyzeProfile() {
     const response = await fetch(`/api/profiles/analyze/${username}`);
 
     const result = await response.json();
-
+    console.log(result);
     loading.style.display = "none";
 
     if (!result.data) {
@@ -30,8 +30,7 @@ async function analyzeProfile() {
 
     let languagesHTML = "";
 
-    const languages = JSON.parse(data.languages);
-
+const languages = data.languages;
     for (let lang in languages) {
 
       languagesHTML += `
@@ -111,8 +110,10 @@ async function analyzeProfile() {
     loading.style.display = "none";
 
     document.getElementById("profileCard").innerHTML =
-      `<h2>Something went wrong</h2>`;
+  `<h2>${error}</h2>`;
 
-    console.log(error);
+console.log(error);
+
+alert(error.message);
   }
 }

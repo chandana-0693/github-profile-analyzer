@@ -20,8 +20,13 @@ exports.analyzeProfile = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(404).json({ error: "GitHub user not found" });
-  }
+
+  console.log(error);
+
+  res.status(500).json({
+    error: error.message
+  });
+}
 };
 
 // Get all profiles
