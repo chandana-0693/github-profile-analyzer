@@ -23,19 +23,24 @@ async function saveProfile(data, callback) {
 
   try {
 
-    await db.execute(sql, [
-      data.username,
-      data.name,
-      data.followers,
-      data.following,
-      data.public_repos,
-      data.public_gists,
-      data.created_at,
-      data.profile_url,
-      data.avatar_url,
-      data.score,
-      JSON.stringify(data.languages),
-    ]);
+   const values = [
+  data.username,
+  data.name,
+  data.followers,
+  data.following,
+  data.public_repos,
+  data.public_gists,
+  data.created_at,
+  data.profile_url,
+  data.avatar_url,
+  data.score,
+  JSON.stringify(data.languages),
+];
+
+console.log("SQL VALUES:");
+console.log(values);
+
+await db.execute(sql, values);
 
     callback(null);
 

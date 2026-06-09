@@ -1,46 +1,62 @@
 const githubService = require("../services/githubService");
 const Profile = require("../models/profileModel");
+const generateAIAnalysis = require("../services/aiService");
 
-// Analyze + save profile
 exports.analyzeProfile = async (req, res) => {
   try {
     const username = req.params.username;
 
     const data = await githubService.fetchGitHubUser(username);
 
+    const aiAnalysis = generateAIAnalysis(data);
+    console.log("PROFILE DATA:");
+console.log(JSON.stringify(data, null, 2));
     Profile.saveProfile(data, (err) => {
       if (err) {
-        return res.status(500).json({ error: err.message });
+        return res.status(500).json({
+          error: err.message,
+        });
       }
 
-      res.json({
-        message: "Profile analyzed and saved successfully",
+      return res.json({
+        message: "Profile analyzed successfully",
         data,
+        aiAnalysis,
       });
     });
-
   } catch (error) {
 
-  console.log(error);
+  console.log("Status:", error.response?.status);
+  console.log("GitHub Error:", error.response?.data);
+  console.log("Full Error:", error);
 
-  res.status(500).json({
-    error: error.message
+  return res.status(500).json({
+    error: error.message,
+    details: error.response?.data
   });
 }
 };
 
-// Get all profiles
 exports.getAllProfiles = (req, res) => {
   Profile.getAll((err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
+    if (err) {
+      return res.status(500).json({
+        error: err.message,
+      });
+    }
+
     res.json(results);
   });
 };
 
-// Get single profile
 exports.getProfile = (req, res) => {
   Profile.getByUsername(req.params.username, (err, results) => {
-    if (err) return res.status(500).json({ error: err.message });
+    if (err) {
+      return res.status(500).json({
+        error: err.message,
+      });
+    }
+
     res.json(results[0] || {});
   });
 };
